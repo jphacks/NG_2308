@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "15分ルール拡張",
+    "version": "1.0.0.0",
+    "description": "開発における15分ルールを徹底する拡張",
+    "icons": {
+        "48": "icon48.png"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "app.js"
+    }
+}
