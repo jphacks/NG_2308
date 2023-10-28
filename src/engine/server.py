@@ -1,8 +1,18 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 # fastapiを実行
 app = FastAPI()
+
+# CORSミドルウェアを有効にする
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # BaseModelをインポート
 from model import OnPageOpen, OnGoogleSearch
