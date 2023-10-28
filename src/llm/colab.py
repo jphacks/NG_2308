@@ -16,7 +16,7 @@ tokenizer = AutoTokenizer.from_pretrained(
 )
 class Agent:
     def __init__(self):
-        model = AutoModelForCausalLM.from_pretrained(
+        self.model = AutoModelForCausalLM.from_pretrained(
             "rinna/bilingual-gpt-neox-4b-instruction-ppo",
             load_in_8bit=True,
             torch_dtype=torch.float16,
