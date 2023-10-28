@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+# fastapiを実行
 app = FastAPI()
 
 class PageOpen(BaseModel):
