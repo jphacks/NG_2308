@@ -7,3 +7,5 @@ transformers==4.34.1
 flet==0.10.3
 playsound==1.3.0
 plyer==2.1.0
+
+simpleaudio==1.0.4
