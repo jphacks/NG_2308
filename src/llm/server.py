@@ -1,9 +1,19 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import uuid, random
 
 # fastapiを実行
 app = FastAPI()
+
+# CORSミドルウェアを有効にする
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Agent情報を辞書形式で保持
 agent_dict = {}
