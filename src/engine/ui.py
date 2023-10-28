@@ -27,7 +27,7 @@ def main(page: ft.Page):
             monitor_btn.icon = ft.icons.PLAY_CIRCLE
             monitor_btn.icon_color = ft.colors.GREEN
         monitor_btn.update()
-    
+
     # クリック時の処理を定義
     monitor_btn.on_click=monitor_clicked
 
@@ -70,7 +70,7 @@ def main(page: ft.Page):
                 ),
             ])
         ])
-    
+
 
     # 設定ページ
     def view_settings():
@@ -90,7 +90,7 @@ def main(page: ft.Page):
             ], alignment=ft.alignment.center
             )
         ])
-    
+
 
     # ルーター
     def route_change(handler):
