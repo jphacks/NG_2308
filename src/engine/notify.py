@@ -1,4 +1,12 @@
-import simpleaudio, os, glob
+"""
+MacOSで実行する際は、下記のwebサイトを参考に修正が必要
+https://hawk-tech-blog.com/python-notification-plyer-pyobjus-macos/
+"""
+import os
+import glob
+
+from plyer import notification
+import simpleaudio
 
 file_name = "default_alert.wav"
 
@@ -16,6 +24,13 @@ def get_default_wav_path():
         files = glob.glob("{}/**/{}".format(current_dir[0:end_t], file_name))
         if len(files) > 0: return files[0]
 
+def do_popup_notify(message: str="通知内容"):
+    notification.notify(
+        title="15minutes",
+        message=message,
+        app_icon="",
+        timeout=100,
+    )
 
 # ファイル名の効果音を演奏する
 def play_sound(filename: str):
@@ -24,4 +39,5 @@ def play_sound(filename: str):
     play_obj.wait_done()
 
 if __name__ == "__main__":
+    do_popup_notify("テスト")
     play_sound(get_default_wav_path())
