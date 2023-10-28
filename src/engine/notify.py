@@ -19,9 +19,9 @@ def get_default_wav_path():
     # カレントディレクトリを遡る形でファイルを検索する
     end_t = len(current_dir)
     while True:
-        end_t = current_dir.rfind("/", 0, end_t)
+        end_t = current_dir.rfind(os.sep, 0, end_t)
         if end_t == -1: return None
-        files = glob.glob("{}/**/{}".format(current_dir[0:end_t], file_name))
+        files = glob.glob(f"{current_dir[0:end_t]}{os.sep}**{os.sep}{file_name}")
         if len(files) > 0: return files[0]
 
 def do_popup_notify(message: str="通知内容"):
