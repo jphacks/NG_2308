@@ -33,6 +33,7 @@ if [[ $issue_num =~ \#[0-9]* ]]; then
 fi
 ```
 
+
 # merge
 GitHub上でPull requestを出す．
 merge先はmasterにして，コメントに close #{issue番号}を含める．
