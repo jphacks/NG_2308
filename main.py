@@ -5,6 +5,7 @@ from pydantic import BaseModel
 # fastapiを実行
 app = FastAPI()
 
+# リクエストのBaseModelを作成
 class PageOpen(BaseModel):
     content: str
 
