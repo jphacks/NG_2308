@@ -3,13 +3,16 @@ import flet as ft
 # 監視モードを定義
 monitor_mode = False
 
+# 音の有無を設定
+sound_mode = True
+
 def main(page: ft.Page):
 
     # 監視ボタンを定義
     monitor_btn = ft.IconButton(
-        icon=ft.icons.PAUSE_CIRCLE,
-        icon_color=ft.colors.PINK,
-        icon_size=100,
+        icon=ft.icons.PLAY_CIRCLE,
+        icon_color=ft.colors.GREEN,
+        icon_size=130,
     )
 
     # 監視モードをクリックしたら
@@ -17,12 +20,12 @@ def main(page: ft.Page):
         global monitor_mode
         if not monitor_mode:
             monitor_mode = True
-            monitor_btn.icon = ft.icons.PLAY_CIRCLE
-            monitor_btn.icon_color = ft.colors.GREEN
-        else:
-            monitor_mode = False
             monitor_btn.icon = ft.icons.PAUSE_CIRCLE
             monitor_btn.icon_color = ft.colors.PINK
+        else:
+            monitor_mode = False
+            monitor_btn.icon = ft.icons.PLAY_CIRCLE
+            monitor_btn.icon_color = ft.colors.GREEN
         monitor_btn.update()
     
     # クリック時の処理を定義
@@ -44,6 +47,14 @@ def main(page: ft.Page):
         on_click=lambda _:page.go("/")
     )
 
+    # 音声ボタンをクリックしたら
+    def sound_clicked(e):
+        global sound_mode
+        if not sound_mode:
+            sound_mode = True
+        else:
+            sound_mode = False
+
     # トップページ
     def view_root():
         return ft.View("/", [
@@ -54,7 +65,7 @@ def main(page: ft.Page):
                 ),
                 ft.Container(
                     content=monitor_btn,
-                    margin=20,
+                    margin=ft.margin.symmetric(vertical=10),
                     alignment=ft.alignment.center
                 ),
             ])
@@ -70,10 +81,14 @@ def main(page: ft.Page):
                     alignment=ft.alignment.center_right
                 ),
                 ft.Container(
-                    content=ft.Text("this is a settings page"),
-                    alignment=ft.alignment.center_left
+                    ft.Row([
+                        ft.Switch(on_change=sound_clicked, value=True),
+                        ft.Text("Play Sound"),
+                    ]),
+                    margin=ft.margin.only(left=30)
                 ),
-            ])
+            ], alignment=ft.alignment.center
+            )
         ])
     
 
