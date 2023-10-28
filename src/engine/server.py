@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 app = FastAPI()
 
 # BaseModelをインポート
-from src.engine.model import OnPageOpen, OnGoogleSearch
+from model import OnPageOpen, OnGoogleSearch
 
 # ページ内容から悩み続けているか判定
 @app.post("/on_page_open")
