@@ -37,7 +37,7 @@ async def judge(client_uuid: str, search_word: str, content: str):
 
     # POSTリクエストでLLMと非同期通信
     async with httpx.AsyncClient() as client:
-        llm_url = "http://{}/on_action".format(os.getenv("LLM_SERVER"))
+        llm_url = "{}/on_action".format(os.getenv("LLM_SERVER"))
         post_data = {
             "client_uuid": client_uuid,
             "search_word": search_word,
