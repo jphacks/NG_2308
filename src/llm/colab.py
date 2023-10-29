@@ -1,20 +1,41 @@
+#セルの区切りは#のみの行で表します
+##################################################
+
+# fastAPIのインストール
+# !pip uninstall tensorflow-probability
+# !pip install fastapi nest-asyncio pyngrok uvicorn
+
+##################################################]
+
+#LLMのインストール
+# ! pip install transformers sentencepiece accelerate bitsandbytes
+
+##################################################
+#############################
+#         models.py         #
+#############################
+from pydantic import BaseModel
+
+class OnAction(BaseModel):
+    client_uuid: str
+    search_word: str
+    page_content: str
+
+
+#################################################
 #############################
 #            LLM.py         #
 #############################
-
-# パッケージのインストール
-# pip install transformers sentencepiece accelerate bitsandbytes
-
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from models import OnAction
+# from models import OnAction
 
 # トークナイザーとモデルの準備
-tokenizer = AutoTokenizer.from_pretrained(
-    "rinna/bilingual-gpt-neox-4b-instruction-ppo",
-    use_fast=False
-)
 class Agent:
+    tokenizer = AutoTokenizer.from_pretrained(
+        "rinna/bilingual-gpt-neox-4b-instruction-ppo",
+        use_fast=False
+    )
     def __init__(self):
         self.model = AutoModelForCausalLM.from_pretrained(
             "rinna/bilingual-gpt-neox-4b-instruction-ppo",
@@ -22,7 +43,7 @@ class Agent:
             torch_dtype=torch.float16,
             device_map="auto",
         )
-    
+
     def on_user_action(self, user_action: OnAction):
         try :
             # プロンプトの準備
@@ -40,7 +61,7 @@ A:True
 
             prompt += "Q:検索ワード:" + user_action.search_word + "\n"
             # 推論の実行
-            token_ids = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt")
+            token_ids = self.tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt")
             with torch.no_grad():
                 output_ids = self.model.generate(
                     token_ids.to(self.model.device),
@@ -48,16 +69,17 @@ A:True
                     do_sample=True,
                     temperature=1.0,
                     top_p=0.85,
-                    pad_token_id=tokenizer.pad_token_id,
-                    bos_token_id=tokenizer.bos_token_id,
-                    eos_token_id=tokenizer.eos_token_id
+                    pad_token_id=self.tokenizer.pad_token_id,
+                    bos_token_id=self.tokenizer.bos_token_id,
+                    eos_token_id=self.tokenizer.eos_token_id
                 )
-            output = tokenizer.decode(output_ids.tolist()[0][token_ids.size(1):])
+            output = self.tokenizer.decode(output_ids.tolist()[0][token_ids.size(1):])
             return True if output == "True" else False
         except :
             return False
 
 
+##################################################
 #############################
 #         server.py         #
 #############################
@@ -66,7 +88,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uuid, random
-from LLM import Agent
+# from LLM import Agent
 
 # fastapiを実行
 app = FastAPI()
@@ -84,7 +106,7 @@ app.add_middleware(
 agent_dict = {}
 
 # BaseModelをインポート
-from models import OnAction
+#from models import OnAction
 
 # 自然言語モデルに対する処理
 @app.post("/on_action")
@@ -95,16 +117,14 @@ async def on_action(req: OnAction):
         client_uuid = uuid.uuid4()
         agent_dict[client_uuid] = Agent()
 
-    # (仮の処理)
-    #random_bool = random.choice([True, False])
-    is_same_topic = agent_dict[req.client_uuid].on_user_action(req)
-    response_data = {"is_same_topic": is_same_topic, "client_uuid": client_uuid}
+
+    is_same_topic = agent_dict[client_uuid].on_user_action(req)
+    response_data = {"is_same_topic": is_same_topic, "client_uuid": str(client_uuid)}
 
     return JSONResponse(content=response_data, status_code=200)
 
 
-
-#############################
+##################################################
 import nest_asyncio
 from pyngrok import ngrok
 import uvicorn
@@ -113,18 +133,3 @@ ngrok_tunnel = ngrok.connect(8000)
 print('Public URL:', ngrok_tunnel.public_url)
 nest_asyncio.apply()
 uvicorn.run(app, port=8000)
-
-
-
-#############################
-#         models.py         #   
-#############################
-
-
-from pydantic import BaseModel
-
-class OnAction(BaseModel):
-    client_uuid: str
-    search_word: str
-    page_content: str
-
