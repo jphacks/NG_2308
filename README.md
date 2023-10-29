@@ -68,7 +68,8 @@ IT系の世界ではよく知られている15分ルール．何か問題に躓�
 #### 製品に取り入れた研究内容（データ・ソフトウェアなど）（※アカデミック部門の場合のみ提出必須）
 * 検索ワードと訪問サイトタイトルに基づく，ユーザーが解決したい問題の切り替わりの判定
 
-## 音声素材
+## 使用素材
+アラート音
 https://mobunikomiudon.com/sound/se-system/
 
 ## 利用方法
@@ -136,3 +137,8 @@ def instance():
   -  ローカルのマシンを利用する方法(VRAM 16G以上推奨)
      - 
      - 
+
+eel君　音声
+https://voicevox.hiroshiba.jp/product/manbetsu_hanamaru/
+説明映像のBGM
+https://dova-s.jp/bgm/play13002.html

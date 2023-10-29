@@ -6,6 +6,7 @@ import yaml
 # ディレクトリとファイルパス
 file_path = 'var/settings.yaml'
 directory_path = 'var'
+log_path = "var/judge.csv"
 
 # ディレクトリが存在しない場合、作成する
 if not os.path.exists(directory_path):
@@ -74,6 +75,9 @@ def main(page: ft.Page):
                 settings['is_running'] = True
             with open(file_path, 'w') as file:
                 yaml.dump(settings, file)
+            # ログファイルの中身を初期化
+            with open(log_path, mode='w', newline='') as file:
+                file.truncate(0)
         else:
             monitor_mode = False
             monitor_btn.icon = ft.icons.PLAY_CIRCLE
