@@ -128,5 +128,11 @@ def instance():
      -  全てのセルを上から順に実行
      -  最後のセルの出力から`https://xxx-xx-xx-xx-xx.ngrok.io`という形式のアドレスをコピー
      -  `src/engine/.env`ファイルを作成し、`LLM_SERVER=`の後に続けてコピーしたアドレスを書き加える
+- ui.pyの起動
+  - engineディレクトリで python ui.py で起動
+
+- 実行完了!!
+
   -  ローカルのマシンを利用する方法(VRAM 16G以上推奨)
-     -  
+     - 
+     - 
