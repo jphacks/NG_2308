@@ -43,12 +43,15 @@ async def judge(client_uuid: str, search_word: str, content: str):
             "search_word": search_word,
             "page_content": content,
         }
-        response = await client.post(llm_url, json=post_data)
+        print(llm_url, post_data)
+        response = await client.post(llm_url, json=post_data, timeout=120.0)
 
     # ログファイルに追記
     current_datetime = datetime.datetime.now()
     timestamp = int(current_datetime.timestamp())
+
     res_content = json.loads(response.content)
+
     append_log(timestamp, search_word, content, res_content["is_same_topic"])
 
     # POSTリクエストで受け取ったUUIDを返す
