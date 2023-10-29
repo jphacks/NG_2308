@@ -4,7 +4,8 @@
     "version": "1.0.0.0",
     "description": "開発における15分ルールを徹底する拡張",
     "icons": {
-        "48": "icon48.png"
+        "48": "logo_square_48.png",
+        "128": "logo_square_128.png"
     },
     "permissions": [
         "activeTab",
