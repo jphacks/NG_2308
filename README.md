@@ -69,4 +69,7 @@ IT系の世界ではよく知られている15分ルール．何か問題に躓�
 * 検索ワードと訪問サイトタイトルに基づく，ユーザーが解決したい問題の切り替わりの判定
 
 ## 音声素材
+アラート音
 https://mobunikomiudon.com/sound/se-system/
+eel君　音声
+https://voicevox.hiroshiba.jp/product/manbetsu_hanamaru/
