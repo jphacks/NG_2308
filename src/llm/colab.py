@@ -78,13 +78,13 @@ class Agent:
             prompt = """
 これから、あるプログラマーが開発の中で行き詰まった時に検索した言葉を「検索ワード:」に続いて、また、その検索ワードの下で訪れたwebページの冒頭を「訪問ページ冒頭:」の形式で与えます。これらを順次与えますが、直前までと同じ課題について検索している時は”True”を、検索して解決しようとしている課題が切り替わった時には”False”を出力してください。以下に、例をいくつか示します。私が与える文章の先頭には”Q:”を、あなたが出力する文章の先頭には”A:”をつけています。この入力に対してあなたは”True”または”False”以外を出力していはいけません。
 Q:検索ワード:chrome.tabs.onUpdated.addListener
-A:True
-
-Q:検索ワード:mozilla tabs.onUpdated
 A:False
 
-Q:検索ワード:chrome拡張 作り方
+Q:検索ワード:mozilla tabs.onUpdated
 A:True
+
+Q:検索ワード:chrome拡張 作り方
+A:False
 です。では、始めます。
 """
             for i in range(len(self.query_history)):
