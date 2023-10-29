@@ -7,7 +7,7 @@
 15分xTech
 
 
-## 紹介動画(まだ)
+## 紹介動画
 こちらからどうぞ! [https://drive.google.com/file/d/1HXnRV8CBgjxmWI3GqmVFQJFyWo6fYK84/view?usp=sharing](https://drive.google.com/file/d/1HXnRV8CBgjxmWI3GqmVFQJFyWo6fYK84/view?usp=sharing)
 
 ## 製品概要
@@ -23,7 +23,7 @@ IT系の世界ではよく知られている15分ルール．何か問題に躓�
 #### 1. 特長1
 必要な操作は，アプリの起動だけ
 
-観測したユーザーの活動に基づき，同じ問題で15分悩んでいる様子を検出すると，自動でお知らせします．タイマーなどを設定する必要はなく，あなたのコーディングを見守ってくれます．
+観測したユーザーの検索活動に基づき，同じ問題で15分悩んでいる様子を検出すると，自動でお知らせします．タイマーなどを設定する必要はなく，あなたのコーディングを見守ってくれます．
 #### 2. 特長2
 独自の判定システム
 
@@ -56,36 +56,30 @@ IT系の世界ではよく知られている15分ルール．何か問題に躓�
 * ブラウザ活動観察
   * chrome拡張
 
-#### デバイス
-* Mac/Windows/Linuxに対応
-  * chrome拡張が動作するブラウザが必要
+#### 対応環境
+* OS: Mac/Linuxに対応
+* 別途，chrome拡張が動作するブラウザが必要
 
 ### 独自技術
 #### ハッカソンで開発した独自機能・技術
-* 独自で開発したものの内容をこちらに記載してください
-* 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください。
+* 検索ワードと訪問サイトタイトルに基づく，ユーザーが解決したい問題の切り替わりの判定
+* 我らがマスコットキャラクター・eelくん
+* FastAPIにより呼び出し可能なcolab上基盤
 
 #### 製品に取り入れた研究内容（データ・ソフトウェアなど）（※アカデミック部門の場合のみ提出必須）
 * 検索ワードと訪問サイトタイトルに基づく，ユーザーが解決したい問題の切り替わりの判定
 
-## 使用素材
-アラート音
-https://mobunikomiudon.com/sound/se-system/
-
 ## 利用方法
 - chrome拡張のインストール
   - 拡張機能の管理ページでデベロッパーモードにする
-  - 「パッケージ化されていない拡張機能を読み込む」選択し、`..\NG_2308\src\chrome_extension`以下を拡張機能として読み込む
+  - 「パッケージ化されていない拡張機能を読み込む」選択し、`src/chrome_extension`以下を拡張機能として読み込む
 - ローカルのpython環境を用意する
-  - `pyenv`のインストール
-  - `pyenv install 3.9.1`を実行
-  - `python -m venv venv`を実行
-  - `pip install --upgrade pip`を実行
-  - (windowsの場合は`.\requirements.txt`の最後の行を削除)
-  - `pip install -r .\requirements.txt`を実行
+  - python3.9.1を導入．
+  - `$ pip install --upgrade pip`を実行
+  - `$ pip install -r requirements.txt`を実行
 - fastAPIサーバーの起動
   - Macの場合，以下の対応が必要．
-    - `venv/lib/python3.11/site-packages/plyer/platforms/macosx/notification.py`を開いて，以下に置き換え．
+    - `PYTHON_LIBRARY_PATH/site-packages/plyer/platforms/macosx/notification.py`を開いて，以下に置き換え．
 ```python
 '''
 Module of MacOS API for plyer.notification.
@@ -120,27 +114,31 @@ def instance():
     '''
     return OSXNotification()
 ```
-  - `cd ..\NG_2308\src\engine`を実行
-  - `uvicorn server:app --host 0.0.0.0 --reload --port 8000`を実行
+  - `src/engine` へ移動
+  - `$ uvicorn server:app --host 0.0.0.0 --reload --port 8000`を実行
 - LLMサーバーの起動
   -  google colabを利用する方法
-     -  `..\NG_2308\src\llm\llm-server.ipynb`をgoogle colabにコピー
-     -  ランタイムを`T4 GPU`に変更する
+     -  `src/llm/llm-server.ipynb`をgoogle colabにコピー
+     -  ランタイムをGPUマシン(V100を推奨)に変更する
      -  全てのセルを上から順に実行
      -  最後のセルの出力から`https://xxx-xx-xx-xx-xx.ngrok.io`という形式のアドレスをコピー
      -  `src/engine/.env`ファイルを作成し、`LLM_SERVER=`の後に続けてコピーしたアドレスを書き加える
+  -  GPUマシンを利用する方法(VRAM 16G以上推奨)
+     - `src/llm` へ移動
+     - `$ uvicorn server:app --host 0.0.0.0 --reload --port 8001`を実行
 - ui.pyの起動
-  - engineディレクトリで python ui.py で起動
+  - `src/engine`ディレクトリで `$ python ui.py` で起動
+- notify.pyの起動
+  - `src/engine`ディレクトリで `$ python notify.py` で起動
 
-- 実行完了!!
+## 今後の展望
 
-  -  ローカルのマシンを利用する方法(VRAM 16G以上推奨)
-     - 
-     - 
+- makefileなどによる，セットアップの自動化
+- 関連研究の更なる調査や，fine-tuningやプロンプト改良などによるLLMによる判定機構の性能向上
+- 通知までの時間やカスタム音声の再生など，カスタマイズ性の向上
 
-eel君　音声
-https://voicevox.hiroshiba.jp/product/manbetsu_hanamaru/
 
-説明映像のBGM
-https://dova-s.jp/bgm/play13002.html
-
+## 使用素材
+- アラート音: https://mobunikomiudon.com/sound/se-system/
+- eelくん 音声: https://voicevox.hiroshiba.jp/product/manbetsu_hanamaru/
+- 説明映像のBGM: https://dova-s.jp/bgm/play13002.html
