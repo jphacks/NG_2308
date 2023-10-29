@@ -14,7 +14,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 # ログファイルに追記
 def append_log(timestamp: int, search_word: str, content: str, is_same_topic: bool):
-    
+
     # 該当ディレクトリ・ファイルの存在確認, 新規作成
     directory_path = Path("{}/var".format(os.getcwd()))
     file_path = Path("{}/var/judge.csv".format(os.getcwd()))
@@ -34,7 +34,7 @@ def append_log(timestamp: int, search_word: str, content: str, is_same_topic: bo
 
 # コンテンツと時刻情報をLLMに送信
 async def judge(client_uuid: str, search_word: str, content: str):
-    
+
     # POSTリクエストでLLMと非同期通信
     async with httpx.AsyncClient() as client:
         llm_url = "http://{}/on_action".format(os.getenv("LLM_SERVER"))
@@ -50,7 +50,7 @@ async def judge(client_uuid: str, search_word: str, content: str):
     timestamp = int(current_datetime.timestamp())
     res_content = json.loads(response.content)
     append_log(timestamp, search_word, content, res_content["is_same_topic"])
-    
+
     # POSTリクエストで受け取ったUUIDを返す
     return res_content["client_uuid"]
 
