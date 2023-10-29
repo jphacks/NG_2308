@@ -59,7 +59,7 @@ Q:検索ワード:chrome拡張 作り方
 A:True
 """
 
-            prompt += "Q:検索ワード:" + user_action.search_word + "\n"
+            prompt += "Q:検索ワード:" + user_action.search_word + "A:"
             # 推論の実行
             token_ids = self.tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt")
             with torch.no_grad():
@@ -76,6 +76,7 @@ A:True
             output = self.tokenizer.decode(output_ids.tolist()[0][token_ids.size(1):])
             return True if output == "True" else False
         except :
+            print("LLM error!")
             return False
 
 
@@ -111,15 +112,15 @@ agent_dict = {}
 # 自然言語モデルに対する処理
 @app.post("/on_action")
 async def on_action(req: OnAction):
-    client_uuid = req.client_uuid
+    client_uuid_str = str(req.client_uuid)
     # 空文字列を受け取るとuuidを新規発行
-    if client_uuid == "":
-        client_uuid = uuid.uuid4()
-        agent_dict[client_uuid] = Agent()
+    if client_uuid_str == "":
+        client_uuid_str = str(uuid.uuid4())
+        agent_dict[client_uuid_str] = Agent()
 
 
-    is_same_topic = agent_dict[client_uuid].on_user_action(req)
-    response_data = {"is_same_topic": is_same_topic, "client_uuid": str(client_uuid)}
+    is_same_topic = agent_dict[client_uuid_str].on_user_action(req)
+    response_data = {"is_same_topic": is_same_topic, "client_uuid": client_uuid_str}
 
     return JSONResponse(content=response_data, status_code=200)
 
