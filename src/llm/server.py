@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uuid, random
 
-from LLM import Agent
+from llm import Agent
 
 # fastapiを実行
 app = FastAPI()
