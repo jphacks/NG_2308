@@ -1,5 +1,33 @@
 #セルの区切りは#のみの行で表します
 ##################################################
+#環境の統一
+import locale
+locale.getpreferredencoding = lambda: "UTF-8"
+# !pip uninstall lida -y
+# !pip uninstall llmx -y
+
+requirements = [
+"fastapi",
+"uvicorn",
+"torch",
+"transformers",
+"sentencepiece",
+"accelerate",
+"bitsandbytes",
+"scipy",
+"flet",
+"plyer",
+"simpleaudio",
+]
+
+for x in requirements:
+    # !pip install $x
+
+#colabではエラー
+#!pip install git+https://github.com/kivy/pyobjus/zipball/master
+
+
+##################################################
 
 # fastAPIのインストール
 # !pip uninstall tensorflow-probability
