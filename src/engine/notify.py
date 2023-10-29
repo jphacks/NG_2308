@@ -41,3 +41,4 @@ def play_sound(filename: str):
 if __name__ == "__main__":
     do_popup_notify("テスト")
     play_sound(get_default_wav_path())
+
