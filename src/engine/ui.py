@@ -1,4 +1,27 @@
 import flet as ft
+import yaml
+import os
+
+# ディレクトリとファイルパス
+file_path = 'var/settings.yaml'
+directory_path = 'var'
+
+# ディレクトリが存在しない場合、作成する
+if not os.path.exists(directory_path):
+    os.makedirs(directory_path)
+
+# settings.yamlファイルが存在しない場合、新しいファイルを作成
+if not os.path.exists(file_path):
+    default_settings = {'is_running': False, 'is_play_sound': True}
+    with open(file_path, 'w') as file:
+        yaml.dump(default_settings, file)
+else:
+    # settings.yamlファイルが存在する場合、is_runningを上書き
+    with open(file_path, 'r') as file:
+        settings = yaml.load(file, Loader=yaml.FullLoader)
+        settings['is_running'] = False
+    with open(file_path, 'w') as file:
+        yaml.dump(settings, file)
 
 # 監視モードを定義
 monitor_mode = False
@@ -22,10 +45,22 @@ def main(page: ft.Page):
             monitor_mode = True
             monitor_btn.icon = ft.icons.PAUSE_CIRCLE
             monitor_btn.icon_color = ft.colors.PINK
+            #監視モードのonをyamlに記載
+            with open(file_path, 'r') as file:
+                settings = yaml.load(file, Loader=yaml.FullLoader)
+                settings['is_running'] = True
+            with open(file_path, 'w') as file:
+                yaml.dump(settings, file)
         else:
             monitor_mode = False
             monitor_btn.icon = ft.icons.PLAY_CIRCLE
             monitor_btn.icon_color = ft.colors.GREEN
+            #監視モードのoffをyamlに記載
+            with open(file_path, 'r') as file:
+                settings = yaml.load(file, Loader=yaml.FullLoader)
+                settings['is_running'] = False
+            with open(file_path, 'w') as file:
+                yaml.dump(settings, file)
         monitor_btn.update()
 
     # クリック時の処理を定義
@@ -52,8 +87,20 @@ def main(page: ft.Page):
         global sound_mode
         if not sound_mode:
             sound_mode = True
+            #音声のonをyamlに記載
+            with open(file_path, 'r') as file:
+                settings = yaml.load(file, Loader=yaml.FullLoader)
+            settings['is_play_sound'] = True
+            with open(file_path, 'w') as file:
+                yaml.dump(settings, file)
         else:
             sound_mode = False
+            #音声のoffをyamlに記載
+            with open(file_path, 'r') as file:
+                settings = yaml.load(file, Loader=yaml.FullLoader)
+                settings['is_play_sound'] = False
+            with open(file_path, 'w') as file:
+                yaml.dump(settings, file)
 
     # トップページ
     def view_root():
@@ -118,3 +165,4 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(target=main)
+
