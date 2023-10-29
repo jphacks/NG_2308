@@ -3,8 +3,8 @@ import yaml
 import os
 
 # ディレクトリとファイルパス
-file_path = 'src/engine/var/settings.yaml'
-directory_path = 'src/engine/var'
+file_path = 'var/settings.yaml'
+directory_path = 'var'
 
 # ディレクトリが存在しない場合、作成する
 if not os.path.exists(directory_path):
