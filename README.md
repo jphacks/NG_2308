@@ -70,3 +70,63 @@ IT系の世界ではよく知られている15分ルール．何か問題に躓�
 
 ## 音声素材
 https://mobunikomiudon.com/sound/se-system/
+
+## 利用方法
+- chrome拡張のインストール
+  - 拡張機能の管理ページでデベロッパーモードにする
+  - 「パッケージ化されていない拡張機能を読み込む」選択し、`..\NG_2308\src\chrome_extension`以下を拡張機能として読み込む
+- ローカルのpython環境を用意する
+  - `pyenv`のインストール
+  - `pyenv install 3.9.1`を実行
+  - `python -m venv venv`を実行
+  - `pip install --upgrade pip`を実行
+  - (windowsの場合は`.\requirements.txt`の最後の行を削除)
+  - `pip install -r .\requirements.txt`を実行
+- fastAPIサーバーの起動
+  - Macの場合，以下の対応が必要．
+    - `venv/lib/python3.11/site-packages/plyer/platforms/macosx/notification.py`を開いて，以下に置き換え．
+```python
+'''
+Module of MacOS API for plyer.notification.
+'''
+
+from plyer.facades import Notification
+
+import os
+
+class OSXNotification(Notification):
+    '''
+    Implementation of MacOS notification API.
+    '''
+
+    def _notify(self, **kwargs):
+        title = kwargs.get('title', '')
+        message = kwargs.get('message', '')
+        app_name = kwargs.get('app_name', '')
+        sound_name = 'default'
+        # app_icon, timeout, ticker are not supported (yet)
+
+        title_text = f'with title "{title}"' if title != '' else ''
+        subtitle_text = f'subtitle "{app_name}"' if app_name != '' else ''
+        soundname_text = f'sound name "{sound_name}"'
+
+        notification_text = f'display notification "{message}" {title_text} {subtitle_text} {soundname_text}'
+        os.system(f"osascript -e '{notification_text}'")
+
+def instance():
+    '''
+    Instance for facade proxy.
+    '''
+    return OSXNotification()
+```
+  - `cd ..\NG_2308\src\engine`を実行
+  - `uvicorn server:app --host 0.0.0.0 --reload --port 8000`を実行
+- LLMサーバーの起動
+  -  google colabを利用する方法
+     -  `..\NG_2308\src\llm\llm-server.ipynb`をgoogle colabにコピー
+     -  ランタイムを`T4 GPU`に変更する
+     -  全てのセルを上から順に実行
+     -  最後のセルの出力から`https://xxx-xx-xx-xx-xx.ngrok.io`という形式のアドレスをコピー
+     -  `src/engine/.env`ファイルを作成し、`LLM_SERVER=`の後に続けてコピーしたアドレスを書き加える
+  -  ローカルのマシンを利用する方法(VRAM 16G以上推奨)
+     -  
