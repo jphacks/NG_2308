@@ -27,7 +27,7 @@ async def on_action(req: OnAction):
     client_uuid = req.client_uuid
     # 空文字列を受け取るとuuidを新規発行
     if client_uuid == "":
-        client_uuid = uuid.uuid4()
+        client_uuid = str(uuid.uuid4())
         agent_dict[client_uuid] = None
 
     # (仮の処理)
