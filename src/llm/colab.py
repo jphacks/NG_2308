@@ -57,8 +57,6 @@ class OnAction(BaseModel):
 #############################
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-# from models import OnAction
-
 class Agent:
     tokenizer = AutoTokenizer.from_pretrained(
         "rinna/bilingual-gpt-neox-4b-instruction-ppo",
@@ -106,9 +104,8 @@ A:True
                     eos_token_id=self.tokenizer.eos_token_id
                 )
             output = self.tokenizer.decode(output_ids.tolist()[0][token_ids.size(1):])
-            print("output:"+output)
 
-            is_same_topic = True if output == "True" else False
+            is_same_topic = True if output == "True</s>" else False
             self.query_history.append(user_action.search_word)
             self.answer_history.append(is_same_topic)
             return is_same_topic
