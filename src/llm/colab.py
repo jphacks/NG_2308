@@ -5,6 +5,8 @@ import locale
 locale.getpreferredencoding = lambda: "UTF-8"
 # !pip uninstall lida -y
 # !pip uninstall llmx -y
+# !pip uninstall tensorflow-probability -y
+
 
 requirements = [
 "fastapi",
@@ -30,7 +32,6 @@ for x in requirements:
 ##################################################
 
 # fastAPIのインストール
-# !pip uninstall tensorflow-probability
 # !pip install fastapi nest-asyncio pyngrok uvicorn
 
 ##################################################]
@@ -58,7 +59,6 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 # from models import OnAction
 
-# トークナイザーとモデルの準備
 class Agent:
     tokenizer = AutoTokenizer.from_pretrained(
         "rinna/bilingual-gpt-neox-4b-instruction-ppo",
@@ -71,6 +71,8 @@ class Agent:
             torch_dtype=torch.float16,
             device_map="auto",
         )
+        self.query_history = []
+        self.answer_history = []
 
     def on_user_action(self, user_action: OnAction):
         try :
@@ -85,8 +87,10 @@ A:False
 
 Q:検索ワード:chrome拡張 作り方
 A:True
+です。では、始めます。
 """
-
+            for i in range(len(self.query_history)):
+                prompt += "Q:検索ワード:" + self.query_history[i] + "\nA:" + str(self.answer_history[i]) + "\n\n"
             prompt += "Q:検索ワード:" + user_action.search_word + "A:"
             # 推論の実行
             token_ids = self.tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt")
@@ -102,9 +106,16 @@ A:True
                     eos_token_id=self.tokenizer.eos_token_id
                 )
             output = self.tokenizer.decode(output_ids.tolist()[0][token_ids.size(1):])
-            return True if output == "True" else False
+            print("output:"+output)
+
+            is_same_topic = True if output == "True" else False
+            self.query_history.append(user_action.search_word)
+            self.answer_history.append(is_same_topic)
+            return is_same_topic
         except :
             print("LLM error!")
+            self.query_history.append(user_action.search_word)
+            self.answer_history.append(is_same_topic)
             return False
 
 
