@@ -10,6 +10,13 @@
 ## 紹介動画
 こちらからどうぞ! [https://drive.google.com/file/d/1HXnRV8CBgjxmWI3GqmVFQJFyWo6fYK84/view?usp=sharing](https://drive.google.com/file/d/1HXnRV8CBgjxmWI3GqmVFQJFyWo6fYK84/view?usp=sharing)
 
+## ギャラリー
+アプリ画面(クリックで動画へ移動)
+![resources/docs/app_demo1.png](resources/docs/app_demo1.mp4)
+
+通知の様子(クリックで動画へ移動)
+![resources/docs/notify_demo1.png](resources/docs/notify_demo1.mp4)
+
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
 「15分調べたり考えたりしても解決しなかったら人に聞きましょう」
@@ -126,6 +133,7 @@ def instance():
   -  GPUマシンを利用する方法(VRAM 16G以上推奨)
      - `src/llm` へ移動
      - `$ uvicorn server:app --host 0.0.0.0 --reload --port 8001`を実行
+     -  `src/engine/.env.sample`をコピーして`src/engine/.env`ファイルを作成する
 - ui.pyの起動
   - `src/engine`ディレクトリで `$ python ui.py` で起動
 - notify.pyの起動
