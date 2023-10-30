@@ -14,7 +14,7 @@
 アプリ画面（動画は[こちら](https://github.com/jphacks/NG_2308/assets/65986407/d0afd900-8de4-4d59-86e4-e9645ea036ea)）
 ![](resources/docs/app_demo1.png)
 
-通知の様子(動画は[こちら]([resources/docs/notify_demo1.mp4](https://github.com/jphacks/NG_2308/assets/65986407/fef62599-0fae-499d-b03c-57bb61cbd32e)))
+通知の様子(動画は[こちら](https://github.com/jphacks/NG_2308/assets/65986407/fef62599-0fae-499d-b03c-57bb61cbd32e))
 ![](resources/docs/notify_demo1.png)
 
 ## 製品概要
