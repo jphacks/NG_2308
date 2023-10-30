@@ -11,11 +11,15 @@
 こちらからどうぞ! [https://drive.google.com/file/d/1HXnRV8CBgjxmWI3GqmVFQJFyWo6fYK84/view?usp=sharing](https://drive.google.com/file/d/1HXnRV8CBgjxmWI3GqmVFQJFyWo6fYK84/view?usp=sharing)
 
 ## ギャラリー
-アプリ画面(クリックで動画へ移動)
-![resources/docs/app_demo1.png](resources/docs/app_demo1.mp4)
+アプリ画面
+![](resources/docs/app_demo1.png)
+
+動画は[こちら](resources/docs/app_demo1.mp4)
 
 通知の様子(クリックで動画へ移動)
-![resources/docs/notify_demo1.png](resources/docs/notify_demo1.mp4)
+![](resources/docs/notify_demo1.png)
+
+動画は[こちら](resources/docs/notify_demo1.mp4)
 
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
